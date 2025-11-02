@@ -5,7 +5,7 @@ import joblib
 import plotly.graph_objects as go
 
 # Page config
-st.set_page_config(page_title="Heart Disease Predictor", page_icon="🫀", layout="wide")
+st.set_page_config(page_title="Heart Disease Predictor", page_icon="❤️", layout="wide")
 
 # Load model
 @st.cache_resource
@@ -15,8 +15,11 @@ def load_model():
 
 model = load_model()
 
-# Title and description
-st.title("🫀 Heart Disease Risk Predictor")
+# Title and Team Information
+st.title("ML-MINIPROJECT-HEART DISEASE PREDICTION")
+st.subheader("by ShyamSunder, Surya, Narayana Reddy")
+st.markdown("---")
+
 st.markdown("""
 This AI-powered tool predicts heart disease risk based on clinical parameters.
 **Disclaimer**: This is for educational purposes only. Consult a healthcare professional for medical advice.
@@ -42,7 +45,7 @@ ca = st.sidebar.slider("Number of Major Vessels (0-3)", 0, 3, 0)
 thal = st.sidebar.selectbox("Thalassemia", ["Normal", "Fixed Defect", "Reversible Defect"])
 
 # Prediction button
-if st.sidebar.button("🔍 Predict Risk", type="primary"):
+if st.sidebar.button("Predict Risk", type="primary"):
     # Mapping dictionaries for consistent encoding
     cp_map = {
         "Typical Angina": 0,
@@ -106,7 +109,7 @@ if st.sidebar.button("🔍 Predict Risk", type="primary"):
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.metric("Prediction", "High Risk ⚠️" if prediction == 1 else "Low Risk ✅")
+            st.metric("Prediction", "High Risk" if prediction == 1 else "Low Risk")
         
         with col2:
             st.metric("Risk Probability", f"{probability[1]*100:.1f}%")
@@ -140,40 +143,40 @@ if st.sidebar.button("🔍 Predict Risk", type="primary"):
         st.plotly_chart(fig, use_container_width=True)
         
         # Recommendations
-        st.subheader("📋 Recommendations")
+        st.subheader("Recommendations")
         if prediction == 1:
             st.warning("""
-            **⚠️ High Risk Detected!** 
+            **High Risk Detected!** 
             
             **Immediate Actions:**
-            - 🏥 **Consult a cardiologist** as soon as possible
-            - 💊 Monitor blood pressure and cholesterol regularly
-            - 📋 Get a complete cardiac workup
+            - Consult a cardiologist as soon as possible
+            - Monitor blood pressure and cholesterol regularly
+            - Get a complete cardiac workup
             
             **Lifestyle Changes:**
-            - 🥗 Adopt a heart-healthy diet (DASH or Mediterranean diet)
-            - 🏃 Increase physical activity gradually (consult doctor first)
-            - 🧘 Practice stress management techniques
-            - 🚭 Stop smoking immediately if applicable
-            - 💤 Ensure 7-9 hours of quality sleep
-            - 🚫 Limit alcohol consumption
+            - Adopt a heart-healthy diet (DASH or Mediterranean diet)
+            - Increase physical activity gradually (consult doctor first)
+            - Practice stress management techniques
+            - Stop smoking immediately if applicable
+            - Ensure 7-9 hours of quality sleep
+            - Limit alcohol consumption
             """)
         else:
             st.success("""
-            **✅ Low Risk - Great Job!**
+            **Low Risk - Great Job!**
             
             **Maintain Your Heart Health:**
-            - 🏃 Regular exercise (150 min/week moderate activity)
-            - 🥗 Continue balanced, nutritious diet
-            - 🩺 Annual health checkups and screenings
-            - 🚭 Avoid smoking and excessive alcohol
-            - 💤 Maintain good sleep hygiene (7-9 hours)
-            - 🧘 Manage stress through meditation or hobbies
-            - ⚖️ Maintain healthy weight (BMI 18.5-24.9)
+            - Regular exercise (150 min/week moderate activity)
+            - Continue balanced, nutritious diet
+            - Annual health checkups and screenings
+            - Avoid smoking and excessive alcohol
+            - Maintain good sleep hygiene (7-9 hours)
+            - Manage stress through meditation or hobbies
+            - Maintain healthy weight (BMI 18.5-24.9)
             """)
         
         # Risk Factor Analysis
-        st.subheader("📊 Your Risk Factor Analysis")
+        st.subheader("Your Risk Factor Analysis")
         
         col1, col2 = st.columns(2)
         
@@ -181,8 +184,8 @@ if st.sidebar.button("🔍 Predict Risk", type="primary"):
             st.markdown("**Clinical Measurements:**")
             measurements = {
                 'Age': f"{age} years",
-                'Blood Pressure': f"{trestbps} mm Hg {'⚠️' if trestbps > 140 else '✅'}",
-                'Cholesterol': f"{chol} mg/dl {'⚠️' if chol > 240 else '✅'}",
+                'Blood Pressure': f"{trestbps} mm Hg {'[High]' if trestbps > 140 else '[Normal]'}",
+                'Cholesterol': f"{chol} mg/dl {'[High]' if chol > 240 else '[Normal]'}",
                 'Max Heart Rate': f"{thalach} bpm",
                 'ST Depression': f"{oldpeak}"
             }
@@ -193,16 +196,16 @@ if st.sidebar.button("🔍 Predict Risk", type="primary"):
             st.markdown("**Risk Indicators:**")
             indicators = {
                 'Chest Pain Type': cp,
-                'Exercise Angina': f"{exang} {'⚠️' if exang == 'Yes' else '✅'}",
-                'Fasting Blood Sugar': f"{fbs} {'⚠️' if fbs == 'Yes' else '✅'}",
+                'Exercise Angina': f"{exang} {'[Warning]' if exang == 'Yes' else '[Normal]'}",
+                'Fasting Blood Sugar': f"{fbs} {'[High]' if fbs == 'Yes' else '[Normal]'}",
                 'ECG Results': restecg,
-                'Major Vessels': f"{ca} {'⚠️' if ca > 0 else '✅'}"
+                'Major Vessels': f"{ca} {'[Abnormal]' if ca > 0 else '[Normal]'}"
             }
             for key, value in indicators.items():
                 st.text(f"{key}: {value}")
         
         # Feature Importance Visualization
-        st.subheader("🎯 Key Contributing Factors")
+        st.subheader("Key Contributing Factors")
         
         risk_factors = {
             'Age Factor': min(age / 100, 1.0),
@@ -219,7 +222,7 @@ if st.sidebar.button("🔍 Predict Risk", type="primary"):
         st.bar_chart(feature_df.set_index('Factor'))
         
         # Additional Information
-        with st.expander("ℹ️ Understanding Your Results"):
+        with st.expander("Understanding Your Results"):
             st.markdown("""
             **Risk Probability Interpretation:**
             - **0-40%**: Low risk - Continue healthy habits
@@ -234,8 +237,8 @@ if st.sidebar.button("🔍 Predict Risk", type="primary"):
             """)
         
     except Exception as e:
-        st.error(f"❌ Error making prediction: {str(e)}")
+        st.error(f"Error making prediction: {str(e)}")
         st.info("Please ensure all fields are filled correctly and try again.")
         import traceback
-        with st.expander("🔧 Technical Details"):
+        with st.expander("Technical Details"):
             st.code(traceback.format_exc())
