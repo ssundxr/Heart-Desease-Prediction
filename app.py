@@ -17,7 +17,7 @@ model = load_model()
 
 # Title and Team Information
 st.title("ML-MINIPROJECT-HEART DISEASE PREDICTION")
-st.subheader("by ShyamSunder, Surya, Narayana Reddy")
+st.subheader("by ShyamSunder, Surya, Narayana Reddy,Thejas")
 st.markdown("---")
 
 st.markdown("""
